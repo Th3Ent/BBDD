@@ -1,0 +1,106 @@
+SQL> SELECT SYSTIMESTAMP(8)
+  2  FROM DUAL;
+
+SYSTIMESTAMP(8)                                                                 
+---------------------------------------------------------------------------     
+17-NOV-17 01.14.53.69084200 PM +00:00                                           
+
+SQL> ALTER TABLE DEPARTAMENTO
+  2  ADD (D1 TIMESTAMP(8) DEFAULT SYSTIMESTAMP(8));
+
+Table altered.
+
+SQL> SELECT *
+  2  FROM DEPARTAMENTO;
+
+        CD D                                                                    
+---------- ------------------------------------------------------------         
+D1                                                                              
+---------------------------------------------------------------------------     
+         1 ANALISIS MATEMATICO                                                  
+17-NOV-17 01.16.35.58416400 PM                                                  
+                                                                                
+         2 ASTROFISICA                                                          
+17-NOV-17 01.16.35.58416400 PM                                                  
+                                                                                
+         3 ESTADISTICA                                                          
+17-NOV-17 01.16.35.58416400 PM                                                  
+                                                                                
+
+        CD D                                                                    
+---------- ------------------------------------------------------------         
+D1                                                                              
+---------------------------------------------------------------------------     
+         4 MATEMATICA FUNDAMENTAL                                               
+17-NOV-17 01.16.35.58416400 PM                                                  
+                                                                                
+
+SQL> SET LINEZIXE 182
+SP2-0158: unknown SET option "LINEZIXE"
+SQL> SET LINEZIZE 182
+SP2-0158: unknown SET option "LINEZIZE"
+SQL> SET LINESIZE 182
+SQL> SELECT *
+  2  FROM DEPARTAMENTO;
+
+        CD D                                                            D1                                                                                                            
+---------- ------------------------------------------------------------ ---------------------------------------------------------------------------                                   
+         1 ANALISIS MATEMATICO                                          17-NOV-17 01.16.35.58416400 PM                                                                                
+         2 ASTROFISICA                                                  17-NOV-17 01.16.35.58416400 PM                                                                                
+         3 ESTADISTICA                                                  17-NOV-17 01.16.35.58416400 PM                                                                                
+         4 MATEMATICA FUNDAMENTAL                                       17-NOV-17 01.16.35.58416400 PM                                                                                
+
+SQL> MODIFY (D1 TIMESTAMP(9));
+SP2-0734: unknown command beginning "MODIFY (D1..." - rest of line ignored.
+SQL> ALTER TABLE DEPARTAMENTO
+  2  MODIFY (D1 TIMESTAMP(9));
+
+Table altered.
+
+SQL> DESCRIBE DEPARTAMENTO
+ Name                                                                                                   Null?    Type
+ ------------------------------------------------------------------------------------------------------ -------- ---------------------------------------------------------------------
+ CD                                                                                                     NOT NULL NUMBER(2)
+ D                                                                                                               VARCHAR2(60)
+ D1                                                                                                              TIMESTAMP(9)
+
+SQL> ALTER TABLE DEPARTAMENTO
+  2  RENAME COLUMN D1 TO D2;
+
+Table altered.
+
+SQL> SELECT *
+  2  FROM DEPARTAMENTO;
+
+        CD D                                                            D2                                                                                                            
+---------- ------------------------------------------------------------ ---------------------------------------------------------------------------                                   
+         1 ANALISIS MATEMATICO                                          17-NOV-17 01.16.35.584164000 PM                                                                               
+         2 ASTROFISICA                                                  17-NOV-17 01.16.35.584164000 PM                                                                               
+         3 ESTADISTICA                                                  17-NOV-17 01.16.35.584164000 PM                                                                               
+         4 MATEMATICA FUNDAMENTAL                                       17-NOV-17 01.16.35.584164000 PM                                                                               
+
+SQL> ALTER TABLE DEPARTAMENTO
+  2  DROP COLUMN D2;
+
+Table altered.
+
+SQL> SELECT *
+  2  FROM DEPARTAMENTO;
+
+        CD D                                                                                                                                                                          
+---------- ------------------------------------------------------------                                                                                                               
+         1 ANALISIS MATEMATICO                                                                                                                                                        
+         2 ASTROFISICA                                                                                                                                                                
+         3 ESTADISTICA                                                                                                                                                                
+         4 MATEMATICA FUNDAMENTAL                                                                                                                                                     
+
+SQL> DROP TABLE DEPARTAMENTO;
+DROP TABLE DEPARTAMENTO
+           *
+ERROR at line 1:
+ORA-02449: unique/primary keys in table referenced by foreign keys 
+
+
+SQL>  DAN CLASE ALMENOS 2 TITULACIONES DISTINTAS
+SP2-0734: unknown command beginning "DAN CLASE ..." - rest of line ignored.
+SQL> SPOOL OFF
