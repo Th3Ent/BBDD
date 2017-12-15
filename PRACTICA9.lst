@@ -1,0 +1,370 @@
+SQL> BEGIN
+  2  DBMS_OUTPUT.PUT_LINE('HLA MUNDO');
+  3  END;
+  4  /
+
+PL/SQL procedure successfully completed.
+
+SQL> SET SERVEROUTPUT ON
+SQL> BEGIN
+  2  DBMS_OUTPUT.PUT_LINE('HOLA MUNDO');
+  3  END;
+  4  /
+HOLA MUNDO                                                                      
+
+PL/SQL procedure successfully completed.
+
+SQL> SAVE HOLAMUNDO
+Created file HOLAMUNDO.sql
+SQL> CREATE OR REPLACE PROCEDURE HOLAMUNDO
+  2  IS
+  3  BEGIN
+  4     DBMS_OUTPUT.PUT_LINE('HOLA MUNDO');
+  5  END;
+  6  /
+
+Procedure created.
+
+SQL> HOLAMUNDO
+SP2-0042: unknown command "HOLAMUNDO" - rest of line ignored.
+SQL> HOLAMUNDO()
+SP2-0734: unknown command beginning "HOLAMUNDO(..." - rest of line ignored.
+SQL> HOLAMUNDO();
+SP2-0734: unknown command beginning "HOLAMUNDO(..." - rest of line ignored.
+SQL> CALL HOLAMUNDO();
+HOLA MUNDO                                                                      
+
+Call completed.
+
+SQL> BEGIN
+  2  HOLAMUNDO();
+  3  END;
+  4  /
+HOLA MUNDO                                                                      
+
+PL/SQL procedure successfully completed.
+
+SQL> CREATE OR REPLACE FUNCTION DOBLE(X NUMBER)
+  2  RETURN NUMBER IS
+  3  BEGIN
+  4  RETURN 2*X;
+  5  END;
+  6  /
+
+Function created.
+
+SQL> CALL DOBLE(2);
+CALL DOBLE(2)
+     *
+ERROR at line 1:
+ORA-06576: not a valid function or procedure name 
+
+
+SQL> VARIABLE X NUMBER;
+SQL> CALL DOBLE(2) INTO X;
+CALL DOBLE(2) INTO X
+                   *
+ERROR at line 1:
+ORA-01745: invalid host/bind variable name 
+
+
+SQL> CALL DOBLE(2) INTO :X;
+
+Call completed.
+
+SQL> PRINT X
+
+         X                                                                      
+----------                                                                      
+         4                                                                      
+
+SQL> DECLARE
+  2  X NUMBER;
+  3  BEGIN
+  4  
+  5  
+  6  
+  7  ;
+  8  ;
+  9  /
+;
+*
+ERROR at line 7:
+ORA-06550: line 7, column 1: 
+PLS-00103: Encountered the symbol ";" when expecting one of the following: 
+( begin case declare exit for goto if loop mod null pragma 
+raise return select update while with <an identifier> 
+<a double-quoted delimited-identifier> <a bind variable> << 
+continue close current delete fetch lock insert open rollback 
+savepoint set sql execute commit forall merge pipe purge 
+json_exists json_value json_query json_object json_array 
+
+
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> HOST clear
+
+SQL> BEGIN
+  2  DBMS_OUTPUT.PUT_LINE(DOBLE(4));
+  3  END
+  4  ;
+  5  /
+8                                                                               
+
+PL/SQL procedure successfully completed.
+
+SQL> SELECT P
+  2  FROM PROFESOR
+  3  WHERE DNI = &D;
+Enter value for d: 1111
+old   3: WHERE DNI = &D
+new   3: WHERE DNI = 1111
+
+P                                                                               
+------------------------------------------------------------                    
+JUAN                                                                            
+
+SQL> CREATE OR REPLACE FUNCTION NOMPRO(D PROFESOR.DNI%TYPE)
+  2  RETURN PROFESOR.P%TYPE IS
+  3  N PROFESOR.P%TYPE;
+  4  BEGIN
+  5  SELECT P
+  6  INTO N
+  7  FROM PROFESOR
+  8  WHERE DNI = D;
+  9  RETURN N;
+ 10  END;
+ 11  /
+
+Function created.
+
+SQL> SELECT NOMPRO(1111)
+  2  FROM DUAL;
+
+NOMPRO(1111)                                                                    
+--------------------------------------------------------------------------------
+JUAN                                                                            
+
+SQL> SELECT *
+  2  FROM &TABLA;
+Enter value for tabla: PROFESOR
+old   2: FROM &TABLA
+new   2: FROM PROFESOR
+
+       DNI P                                                                    
+---------- ------------------------------------------------------------         
+       CAR CAT                                                                  
+---------- -----                                                                
+      1111 JUAN                                                                 
+         6 CU                                                                   
+                                                                                
+      2222 CARLOS                                                               
+         7 TU                                                                   
+                                                                                
+      3333 PEDRO                                                                
+         5 TEU                                                                  
+                                                                                
+
+       DNI P                                                                    
+---------- ------------------------------------------------------------         
+       CAR CAT                                                                  
+---------- -----                                                                
+      4444 MARIA                                                                
+         7 TU                                                                   
+                                                                                
+      5555 IVAN                                                                 
+         1 CEU                                                                  
+                                                                                
+      6666 CARMEN                                                               
+         3 CD                                                                   
+                                                                                
+
+       DNI P                                                                    
+---------- ------------------------------------------------------------         
+       CAR CAT                                                                  
+---------- -----                                                                
+      7777 MARIO                                                                
+         2 TU                                                                   
+                                                                                
+      8888 FRANCISCO                                                            
+         5 TU                                                                   
+                                                                                
+      9999 ANGELA                                                               
+         8 TEU                                                                  
+                                                                                
+
+       DNI P                                                                    
+---------- ------------------------------------------------------------         
+       CAR CAT                                                                  
+---------- -----                                                                
+      1010 DAVID                                                                
+         4 TU                                                                   
+                                                                                
+      2020 SOLEDAD                                                              
+         7 CU                                                                   
+                                                                                
+      3030 JOSE MANUEL                                                          
+         6 TEU                                                                  
+                                                                                
+
+       DNI P                                                                    
+---------- ------------------------------------------------------------         
+       CAR CAT                                                                  
+---------- -----                                                                
+      4040 CARMELO                                                              
+         7 TU                                                                   
+                                                                                
+      5050 CARINA                                                               
+         8 CEU                                                                  
+                                                                                
+
+14 rows selected.
+
+SQL> SET LINESIZE 180
+SQL> SELECT *
+  2  FROM &TABLA;
+Enter value for tabla: PROFESOR
+old   2: FROM &TABLA
+new   2: FROM PROFESOR
+
+       DNI P                                                                   CAR CAT                                                                                              
+---------- ------------------------------------------------------------ ---------- -----                                                                                            
+      1111 JUAN                                                                  6 CU                                                                                               
+      2222 CARLOS                                                                7 TU                                                                                               
+      3333 PEDRO                                                                 5 TEU                                                                                              
+      4444 MARIA                                                                 7 TU                                                                                               
+      5555 IVAN                                                                  1 CEU                                                                                              
+      6666 CARMEN                                                                3 CD                                                                                               
+      7777 MARIO                                                                 2 TU                                                                                               
+      8888 FRANCISCO                                                             5 TU                                                                                               
+      9999 ANGELA                                                                8 TEU                                                                                              
+      1010 DAVID                                                                 4 TU                                                                                               
+      2020 SOLEDAD                                                               7 CU                                                                                               
+
+       DNI P                                                                   CAR CAT                                                                                              
+---------- ------------------------------------------------------------ ---------- -----                                                                                            
+      3030 JOSE MANUEL                                                           6 TEU                                                                                              
+      4040 CARMELO                                                               7 TU                                                                                               
+      5050 CARINA                                                                8 CEU                                                                                              
+
+14 rows selected.
+
+SQL> SET LINESIZE 1800
+SQL> SELECT *
+  2  FROM &TABLA;
+Enter value for tabla: PROFESOR
+old   2: FROM &TABLA
+new   2: FROM PROFESOR
+
+       DNI P                                                                   CAR CAT                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+---------- ------------------------------------------------------------ ---------- -----                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+      1111 JUAN                                                                  6 CU                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+      2222 CARLOS                                                                7 TU                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+      3333 PEDRO                                                                 5 TEU                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+      4444 MARIA                                                                 7 TU                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+      5555 IVAN                                                                  1 CEU                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+      6666 CARMEN                                                                3 CD                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+      7777 MARIO                                                                 2 TU                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+      8888 FRANCISCO                                                             5 TU                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+      9999 ANGELA                                                                8 TEU                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+      1010 DAVID                                                                 4 TU                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+      2020 SOLEDAD                                                               7 CU                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+
+       DNI P                                                                   CAR CAT                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+---------- ------------------------------------------------------------ ---------- -----                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+      3030 JOSE MANUEL                                                           6 TEU                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+      4040 CARMELO                                                               7 TU                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+      5050 CARINA                                                                8 CEU                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+
+14 rows selected.
+
+SQL> CREATE OR REPLACE PROCEDURE LISTAR_PRO
+  2  IS
+  3  FILA PROFESOR%ROWTYPE;
+  4  CURSOR C IS
+  5  SELECT *
+  6  FROM PROFESOR;
+  7  BEGIN
+  8  OPEN C;
+  9  LOOP
+ 10  
+ 11  FETCH C INTO FILA;
+ 12  EXIT WHEM C%NOTFOUND;
+ 13  DBMS_OUTPU.PUT_LINE(FILA.DNI,FILA.P,FILA.CAT);
+ 14  END LOOP;
+ 15  CLOSE C;
+ 16  END;
+ 17  /
+
+Warning: Procedure created with compilation errors.
+
+SQL> CREATE OR REPLACE PROCEDURE LISTAR_PRO
+  2  IS
+  3  FILA PROFESOR%ROWTYPE;
+  4  CURSOR C IS
+  5  SELECT *
+  6  FROM PROFESOR;
+  7  BEGIN
+  8  OPEN C;
+  9  LOOP
+ 10  FETCH C INTO FILA;
+ 11  EXIT WHEM C%NOTFOUND;
+ 12  DBMS_OUTPU.PUT_LINE(FILA.DNI,FILA.P,FILA.CAT);
+ 13  END LOOP;
+ 14  END;
+ 15  /
+
+Warning: Procedure created with compilation errors.
+
+SQL> CREATE OR REPLACE PROCEDURE LISTAR_PRO
+  2  IS
+  3  FILA PROFESOR%ROWTYPE;
+  4  CURSOR C IS
+  5  SELECT *
+  6  FROM PROFESOR;
+  7  BEGIN
+  8  OPNE C;
+  9  LOOP
+ 10  FETCH C INTO FILA;
+ 11  EXIT WHEM C%NOTFOUND;
+ 12  DBMS_OUTPU.PUT_LINE(FILA.DNI||FILA.P||FILA.CAT);
+ 13  END LOOP;
+ 14  END;
+ 15  /
+
+Warning: Procedure created with compilation errors.
+
+SQL> CREATE OR REPLACE PROCEDURE LISTAR_PRO
+  2  IS
+  3  FILA PROFESOR%ROWTYPE;
+  4  CURSOR C IS
+  5  SELECT *
+  6  FROM PROFESOR;
+  7  BEGIN
+  8  OPEN C;
+  9  LOOP
+ 10  FETCH C INTO FILA;
+ 11  EXIT WHEM C%NOTFOUND;
+ 12  DBMS_OUTPU.PUT_LINE(FILA.DNI||FILA.P||FILA.CAT);
+ 13  END LOOP;
+ 14  END;
+ 15  /
+
+Warning: Procedure created with compilation errors.
+
+SQL> SELECT LISTAR_PRO
+  2  FROM DUAL;
+SELECT LISTAR_PRO
+       *
+ERROR at line 1:
+ORA-00904: "LISTAR_PRO": invalid identifier 
+
+
+SQL> SPOOL OFF
